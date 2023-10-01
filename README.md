@@ -1,6 +1,6 @@
 # Chess Project
 
-## Running Chess
+### Running Chess
 
 ### Windows 
 
