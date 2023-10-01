@@ -11,9 +11,9 @@ public class Bishop extends Piece{
     public Bishop(GColor color){
         super("Bishop", color);
         if (color == GColor.WHITE)
-            this.symbol = "[♗ ]";
+            this.symbol = "[B ]";
         else
-            this.symbol = "[♝ ]";
+            this.symbol = "[P ]";
     }
     public Bishop(Piece p) {
         super(p);
