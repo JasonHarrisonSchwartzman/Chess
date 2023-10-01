@@ -1,6 +1,6 @@
 # Chess Project
 
-### Running Chess
+After Downloading and extracting files from the zip:
 
 ### Windows 
 
