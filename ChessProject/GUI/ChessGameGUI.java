@@ -72,7 +72,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
         //this makes the window
         JFrame frame = new JFrame();
         frame.setIconImage(ImageIO.read(new File("ChessProject//GUI//knight.png")));
-        frame.setTitle("ChessGameAI");
+        frame.setTitle("Chess");
         JPanel pn = new JPanel(){
         //
             //this makes the board
