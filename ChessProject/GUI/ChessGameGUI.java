@@ -184,36 +184,38 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                 //this grabs the second squares data and sends it to board if it can move.
                 if(loc[0] != getPieceLoc(e.getX(), e.getY()-32, boardArray)){    
                     loc[1]=getPieceLoc(e.getX(),e.getY()-32,boardArray);
-                        Move move = new Move(board.getSquare(loc[0]),board.getSquare(loc[1]));
-                        if (board.canMove(move)) {
-                            HMoves.add(Conversions.moveToAlgebraic(move));
-                            addToTable();
-                            predictedMove=new ArrayList<Integer>();
-                            board.move(move);
-
-                            AI ai = new AI(board);
-                            Move computerMove = board.move(ai.calculateMove(board));
-                            HMoves.add(Conversions.moveToAlgebraic(computerMove));
-                            addToTable();
-                            System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
-                        }
-                        if (board.isInCheck(board.getTurn())) {
-                            if (board.isInCheckMate(board.getTurn())) {
-                                frame.repaint();
-                                JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        else {
-                            if (board.isInStaleMate(board.getTurn())) {
-                                frame.repaint();
-                                JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        //this updates the window
-                        frame.repaint();
-                        loc[0]=null;
+                    Move move = new Move(board.getSquare(loc[0]),board.getSquare(loc[1]));
+                    if (board.canMove(move)) {
+                        HMoves.add(Conversions.moveToAlgebraic(move));
+                        addToTable();
+                        predictedMove=new ArrayList<Integer>();
+                        board.move(move);
+                        
+                        AI ai = new AI(board);
+                        Move computerMove = ai.calculateMove(board);
+                        HMoves.add(Conversions.moveToAlgebraic(computerMove));
+                        addToTable();
+                        board.move(computerMove);
+                        
+                        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
                     }
+                    if (board.isInCheck(board.getTurn())) {
+                        if (board.isInCheckMate(board.getTurn())) {
+                            frame.repaint();
+                            JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    else {
+                        if (board.isInStaleMate(board.getTurn())) {
+                            frame.repaint();
+                            JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    //this updates the window
+                    frame.repaint();
+                    loc[0]=null;
                 }
+            }
             @Override
             public void mouseEntered(MouseEvent e) {
             }
