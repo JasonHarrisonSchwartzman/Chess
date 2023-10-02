@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import ChessProject.Pieces.GColor;
 import ChessProject.*;
-import ChessProject.AI.Evaluation;
+//import ChessProject.AI.Evaluation;
 import ChessProject.AI.*;
 
 
