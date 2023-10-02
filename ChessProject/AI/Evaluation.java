@@ -84,7 +84,7 @@ public class Evaluation {
         HashMap<GColor,ArrayList<Square>> pastPawns = new HashMap<GColor,ArrayList<Square>>();
         pastPawns.put(GColor.WHITE, new ArrayList<Square>());
         pastPawns.put(GColor.BLACK, new ArrayList<Square>());
-        Square[][] boardArray = board.getBoard();
+        //Square[][] boardArray = board.getBoard();
 
         ArrayList<Square> allWhitePieces = board.findAllPiecesOfColor(GColor.WHITE);
         ArrayList<Square> allBlackPieces = board.findAllPiecesOfColor(GColor.BLACK);
@@ -100,7 +100,7 @@ public class Evaluation {
             }
         }
 
-        for (Square square: allWhitePieces) {
+        /*for (Square square: allWhitePieces) {
             for (Square square2: allBlackPieces) {
 
             }
@@ -108,7 +108,7 @@ public class Evaluation {
 
         for (Square square: allBlackPieces) {
 
-        }
+        }*/
         return pastPawns;
     }
     
