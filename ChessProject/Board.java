@@ -167,7 +167,7 @@ public class Board {
      * This will move a piece from one square on the board to the other
      * @param move
      */
-    public void move(Move move) {
+    public Move move(Move move) {
         //note that this method doesn't check the move's legality
 
         //disecting the move 
@@ -211,11 +211,11 @@ public class Board {
             castle(move);
         }
 
-
         //updates the piece location
         //updatePieceLocation(startSquare, endSquare);
         //finally ends the move function
         switchTurn();
+        return move;
     }
 
     /**

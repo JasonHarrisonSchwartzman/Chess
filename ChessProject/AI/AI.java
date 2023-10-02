@@ -5,7 +5,6 @@ import ChessProject.Move;
 
 public class AI {
 
-    private String name;
     private MoveNode tree;
 
     public AI(Board board) {
@@ -13,8 +12,8 @@ public class AI {
     }
 
     public Move calculateMove(Board board) {
-        
-        return null;
+        return board.generateAllLegalMoves(board.getTurn()).get(0);
+        //return null;
     }
 
     public void createTree(int depth, Board board) {
