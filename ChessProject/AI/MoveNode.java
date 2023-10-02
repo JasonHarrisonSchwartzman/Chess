@@ -4,7 +4,7 @@ import ChessProject.*;
 import java.util.ArrayList;
 
 public class MoveNode {
-    
+    private MoveNode prev; //previous move
     private Move move; //This is the move that lead to the current state of the board
     private Board board; //The board after the move was made
     private MoveNode[] legalMoves; //The next tree of move nodes
@@ -16,7 +16,8 @@ public class MoveNode {
      * @param move
      * @param board
      */
-    public MoveNode(Move move, Board board) {
+    public MoveNode(MoveNode prev, Board board, Move move) {
+        this.prev = prev;
         this.move = move;
         this.board = new Board(board, move);
         totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
@@ -36,14 +37,22 @@ public class MoveNode {
         legalMoves = new MoveNode[totalLegalMoves];
         ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
         for (int i = 0; i < totalLegalMoves; i++) {
-            legalMoves[i] = new MoveNode(moves.get(i), board);
+            legalMoves[i] = new MoveNode(this, board, moves.get(i));
         }
-        legalMoves[1].getBoard().printBoard();
+        //legalMoves[1].getBoard().printBoard();
+    }
+
+    public void evaluateMoveNode() {
+        eval = Evaluation.evaluate(board);
     }
 
     //getters
+    public MoveNode getMoveNode() {
+        return prev;
+    }
+
     public Move getMove() {
-        return move;
+        return move; 
     }
 
     public Board getBoard() {
@@ -60,5 +69,9 @@ public class MoveNode {
 
     public double getEval() {
         return eval;
+    }
+
+    public void setEval(double eval) {
+        this.eval = eval;
     }
 }
