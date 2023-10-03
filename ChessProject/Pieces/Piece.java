@@ -40,6 +40,9 @@ public class Piece{
      * @param p
      */
     public Piece(Piece p) {
+        //if (p == null) {
+        //    return;
+        //}
         name = p.name;
         notation = p.getNotation();
         color = p.getColor();

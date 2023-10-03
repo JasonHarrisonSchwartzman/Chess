@@ -65,7 +65,7 @@ public class AI {
         if (node == null) {//only works for depth of 1
             ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
             for (int i = 0; i < numMoveNodes; i++) {
-                moveNodes[i] = new MoveNode(null, new Board(board), moves.get(i));
+                moveNodes[i] = new MoveNode(null, board, moves.get(i));
             }
         }
         /*else {

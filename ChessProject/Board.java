@@ -659,6 +659,7 @@ public class Board {
                 return square;
             }
         }
+        System.out.println("King Location is NULL");
         return null;
     }
 
