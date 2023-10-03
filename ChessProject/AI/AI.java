@@ -14,7 +14,10 @@ public class AI {
     }
 
     public Move calculateMove(Board board) {
-        return board.generateAllLegalMoves(board.getTurn()).get(0);
+        System.out.println("Calculating move");
+        createTree(1,board,tree);
+        return findBestMove();
+        //return board.generateAllLegalMoves(board.getTurn()).get(0);
     }
     /*
      *                  e4
@@ -25,17 +28,40 @@ public class AI {
      * 
      */
 
-    public void findBestMove() {
+    public Move findBestMove() {
+        Move bestMove = null;
+        if (color == GColor.WHITE) {//find whites best move
+            double maxVal = Double.NEGATIVE_INFINITY;
+            for (MoveNode node: tree.getLegalMoves()) {
+                if (node.getEval() > maxVal) {
+                    maxVal = node.getEval();
+                    bestMove = node.getMove();
+                }
+            }
+            return bestMove;
+        }
+        else {
+            double minVal = Double.POSITIVE_INFINITY;
 
+            for (MoveNode node: tree.getLegalMoves()) {
+                if (node.getEval() < minVal) {
+                    minVal = node.getEval();
+                    bestMove = node.getMove();
+                }
+            }
+            return bestMove;
+        }
     }
 
-    public void createTree(int depth, Board board) {
+    public void createTree(int depth, Board board, MoveNode node) {
         if (depth == 0) {
             return;
         }
-        //createTree(depth - 1)
-        tree.addLegalMoveNodes();
-        //createTree(depth - 1)
+        for (int i = 0; i < node.getLegalMoves().length; i++) {
+            MoveNode currentMove = node.getLegalMoves()[i];
+            if (depth > 1) currentMove.addLegalMoveNodes();
+            createTree(depth - 1, board,currentMove);
+        }
     }
 
     /**
@@ -68,6 +94,6 @@ public class AI {
     public static void main(String[] args) {
         Board board = new Board();
         AI ai = new AI(board);
-        ai.createTree(1, board);
+        ai.createTree(1, board, ai.tree);
     }
 }

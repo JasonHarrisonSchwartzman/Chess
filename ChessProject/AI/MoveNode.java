@@ -19,14 +19,16 @@ public class MoveNode {
     public MoveNode(MoveNode prev, Board board, Move move) {
         this.prev = prev;
         this.move = move;
-        this.board = new Board(board, move);
-        totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
+        this.board = new Board(board, move);//makes the move
+        //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         eval = Evaluation.evaluate(board);
     }
 
     public MoveNode(Board board) {
         this.board = board;
-        totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
+        this.totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
+        System.out.println("TOTAL LEGAL MOVES: " + totalLegalMoves);
+        //addLegalMoveNodes();
         eval = Evaluation.evaluate(board);
     }
 
@@ -36,10 +38,11 @@ public class MoveNode {
     public void addLegalMoveNodes() {
         legalMoves = new MoveNode[totalLegalMoves];
         ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
+        System.out.println("Num Legal moves: " + moves.size() + " Legal moves length: " + legalMoves.length);
         for (int i = 0; i < totalLegalMoves; i++) {
+            System.out.println(i);
             legalMoves[i] = new MoveNode(this, board, moves.get(i));
         }
-        //legalMoves[1].getBoard().printBoard();
     }
 
     public void evaluateMoveNode() {

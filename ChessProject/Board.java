@@ -99,6 +99,11 @@ public class Board {
      * @param b
      */
     public Board(Board b) {
+        /*this.board = b.board;
+        this.capturedPiece = b.capturedPiece;
+        this.moves = b.moves;
+        this.turn = b.turn;*/
+        System.out.println("board start created");
         board = new Square[8][8];
         Square[][] boardArray = b.getBoard();
         for (int i = 0; i < 8; i++) {
@@ -106,11 +111,13 @@ public class Board {
                 board[i][j] = new Square(boardArray[i][j]);
             }
         }
+        System.out.println("made board");
         ArrayList<Move> bMoves = b.getMoves();
-        moves = new ArrayList<Move>();
+        moves = new ArrayList<Move>(bMoves.size());
         for (int i = 0; i < bMoves.size(); i++) {
-            moves.set(i, bMoves.get(i));
+            moves.add(i, bMoves.get(i));
         }
+        System.out.println("test");
     }
 
     /**
@@ -121,6 +128,7 @@ public class Board {
     public Board(Board b, Move move) {
         this(b);
         this.move(move);
+        System.out.println("board end created");
     }
     /**
      * This method sets up all the adjacent square references in each square object
