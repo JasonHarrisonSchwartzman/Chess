@@ -18,7 +18,7 @@ public class AI {
         color = board.getTurn();
     }
 
-    public Move calculateMove(Board board) {
+    public Move calculateMove() {
         System.out.println("Calculating move");
         createTree(1,board,null);
         return findBestMove();
@@ -62,19 +62,19 @@ public class AI {
         if (depth == 0) {
             return;
         }
-        if (node == null) {
+        if (node == null) {//only works for depth of 1
             ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
             for (int i = 0; i < numMoveNodes; i++) {
-                moveNodes[i] = new MoveNode(null, board, moves.get(i));
+                moveNodes[i] = new MoveNode(null, new Board(board), moves.get(i));
             }
         }
-        else {
+        /*else {
             for (int i = 0; i < node.getLegalMoves().length; i++) {
                 MoveNode currentMove = node.getLegalMoves()[i];
                 if (depth > 1) currentMove.addLegalMoveNodes();
                 createTree(depth - 1, board,currentMove);
             }
-        }
+        }*/
     }
 
     /**

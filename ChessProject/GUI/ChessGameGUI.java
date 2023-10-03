@@ -192,7 +192,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         board.move(move);
                         
                         AI ai = new AI(board);
-                        Move computerMove = ai.calculateMove(board);
+                        Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));
                         addToTable();
                         board.move(computerMove);
