@@ -27,9 +27,8 @@ public class MoveNode {
         }
         //this.board.switchTurn();
         this.board.move(move);
-        this.board.printBoard();
-        this.board.switchTurn();
-        System.out.println(this.board.generateAllLegalMoves());
+        //this.board.printBoard();
+        //System.out.println(this.board.generateAllLegalMoves());
         //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         eval = Evaluation.evaluate(this.board);
         System.out.println("Move: " + move.toString() + " EVAL: " + eval);

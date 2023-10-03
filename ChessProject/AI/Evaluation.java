@@ -11,13 +11,15 @@ public class Evaluation {
     public static double pointsWeight = 0.7; //70%
     public static double centerControlWeight = 0.3; //30%
     public static double evaluate(Board board) {
-        //board.switchTurn();
+        board.switchTurn();
+        int numPossibleNextMovesSameColor = board.generateAllLegalMoves().size();
+        board.switchTurn();
         //System.out.println("Evaluating turn: " + board.getTurn().toString());
         //System.out.println(board.generateAllLegalMoves(board.getTurn()));
         //board.printBoard();
-        return board.generateAllLegalMoves().size();
+        //return board.generateAllLegalMoves().size();
         //System.out.println("EVAL: " + (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size()));
-        //return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size();
+        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + numPossibleNextMovesSameColor;
     }
 
     /**
