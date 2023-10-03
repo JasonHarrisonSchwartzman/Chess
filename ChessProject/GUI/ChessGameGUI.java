@@ -190,8 +190,10 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         addToTable();
                         predictedMove=new ArrayList<Integer>();
                         board.move(move);
+
                         frame.repaint();
-                    loc[0]=null;
+                        loc[0]=null;
+                        
                         AI ai = new AI(board);
                         Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));

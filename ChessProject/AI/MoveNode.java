@@ -2,6 +2,7 @@ package ChessProject.AI;
 
 import ChessProject.*;
 import java.util.ArrayList;
+import ChessProject.Pieces.GColor;
 
 public class MoveNode {
     private MoveNode prev; //previous move
@@ -19,18 +20,27 @@ public class MoveNode {
     public MoveNode(MoveNode prev, Board board, Move move) {
         this.prev = prev;
         this.move = move;
-        this.board = new Board(board, move);//makes the move
+        //this.board = board;
+        this.board = new Board();//makes the move
+        for (Move m: board.getMoves()) {
+            this.board.move(m);
+        }
+        //this.board.switchTurn();
+        this.board.move(move);
+        this.board.printBoard();
+        this.board.switchTurn();
+        System.out.println(this.board.generateAllLegalMoves());
         //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         eval = Evaluation.evaluate(this.board);
         System.out.println("Move: " + move.toString() + " EVAL: " + eval);
     }
 
     public MoveNode(Board board) {
-        this.board = board;
+        /*this.board = board;
         this.totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         System.out.println("TOTAL LEGAL MOVES: " + totalLegalMoves);
         //addLegalMoveNodes();
-        eval = Evaluation.evaluate(board);
+        eval = Evaluation.evaluate(board);*/
     }
 
     /**

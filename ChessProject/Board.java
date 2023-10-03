@@ -190,7 +190,7 @@ public class Board {
             //pieceLocation.get(getNextTurn()).remove(board[Integer.parseInt(endSquareIndices.substring(0,1))][Integer.parseInt(endSquareIndices.substring(1))]);
             capturedPiece = new Square(endSquare); // should add the captured piece to the arrayList
         }
-        // capturedPiece is empty otherwisep
+        // capturedPiece is empty otherwise
         else {
             capturedPiece = null;
         }
@@ -519,6 +519,23 @@ public class Board {
      * @return ArrayList of Moves
      */
     public ArrayList<Move> generateAllLegalMoves(GColor color) {
+        ArrayList<Move> legalMoves = new ArrayList<Move>();
+        ArrayList<Square> pieces = findAllPiecesOfColor(color);
+        for (Square square: pieces) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    Move move = new Move(square, board[i][j]);
+                    if (canMove(move)) {
+                        legalMoves.add(move);
+                    }
+                }
+            }
+        }
+        return legalMoves;
+    }
+
+    public ArrayList<Move> generateAllLegalMoves() {
+        GColor color = turn;
         ArrayList<Move> legalMoves = new ArrayList<Move>();
         ArrayList<Square> pieces = findAllPiecesOfColor(color);
         for (Square square: pieces) {
