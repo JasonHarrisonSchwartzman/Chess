@@ -21,7 +21,8 @@ public class MoveNode {
         this.move = move;
         this.board = new Board(board, move);//makes the move
         //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
-        eval = Evaluation.evaluate(board);
+        eval = Evaluation.evaluate(new Board(this.board));
+        System.out.println("EVAL: " + eval);
     }
 
     public MoveNode(Board board) {

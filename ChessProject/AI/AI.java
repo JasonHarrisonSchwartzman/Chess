@@ -3,19 +3,24 @@ package ChessProject.AI;
 import ChessProject.Board;
 import ChessProject.Move;
 import ChessProject.Pieces.GColor;
+import java.util.ArrayList;
 
 public class AI {
 
-    private MoveNode tree;
+    private MoveNode[] moveNodes;
+    private int numMoveNodes;
+    private Board board; //curent board
     private GColor color;
     public AI(Board board) {
-        tree = new MoveNode(board); //base
+        this.board = board;
+        numMoveNodes = board.generateAllLegalMoves(board.getTurn()).size();
+        moveNodes = new MoveNode[numMoveNodes];
         color = board.getTurn();
     }
 
     public Move calculateMove(Board board) {
         System.out.println("Calculating move");
-        createTree(1,board,tree);
+        createTree(1,board,null);
         return findBestMove();
         //return board.generateAllLegalMoves(board.getTurn()).get(0);
     }
@@ -30,9 +35,9 @@ public class AI {
 
     public Move findBestMove() {
         Move bestMove = null;
-        if (color == GColor.WHITE) {//find whites best move
+        if (color == GColor.BLACK) {//find whites best move
             double maxVal = Double.NEGATIVE_INFINITY;
-            for (MoveNode node: tree.getLegalMoves()) {
+            for (MoveNode node: moveNodes) {
                 if (node.getEval() > maxVal) {
                     maxVal = node.getEval();
                     bestMove = node.getMove();
@@ -43,7 +48,7 @@ public class AI {
         else {
             double minVal = Double.POSITIVE_INFINITY;
 
-            for (MoveNode node: tree.getLegalMoves()) {
+            for (MoveNode node: moveNodes) {
                 if (node.getEval() < minVal) {
                     minVal = node.getEval();
                     bestMove = node.getMove();
@@ -57,10 +62,18 @@ public class AI {
         if (depth == 0) {
             return;
         }
-        for (int i = 0; i < node.getLegalMoves().length; i++) {
-            MoveNode currentMove = node.getLegalMoves()[i];
-            if (depth > 1) currentMove.addLegalMoveNodes();
-            createTree(depth - 1, board,currentMove);
+        if (node == null) {
+            ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
+            for (int i = 0; i < numMoveNodes; i++) {
+                moveNodes[i] = new MoveNode(null, board, moves.get(i));
+            }
+        }
+        else {
+            for (int i = 0; i < node.getLegalMoves().length; i++) {
+                MoveNode currentMove = node.getLegalMoves()[i];
+                if (depth > 1) currentMove.addLegalMoveNodes();
+                createTree(depth - 1, board,currentMove);
+            }
         }
     }
 
@@ -94,6 +107,6 @@ public class AI {
     public static void main(String[] args) {
         Board board = new Board();
         AI ai = new AI(board);
-        ai.createTree(1, board, ai.tree);
+        ai.createTree(1, board, null);
     }
 }

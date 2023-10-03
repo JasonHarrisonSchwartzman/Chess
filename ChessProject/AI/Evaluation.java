@@ -10,9 +10,9 @@ public class Evaluation {
 
     public static double pointsWeight = 0.7; //70%
     public static double centerControlWeight = 0.3; //30%
-    
     public static double evaluate(Board board) {
-        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board);
+        //System.out.println("EVAL: " + (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size()));
+        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size();
     }
 
     /**
