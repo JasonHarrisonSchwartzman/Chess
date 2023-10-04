@@ -8,8 +8,8 @@ import ChessProject.Pieces.*;
 
 public class Evaluation {
 
-    public static double pointsWeight = 0.7; //70%
-    public static double centerControlWeight = 0.3; //30%
+    public static double pointsWeight = 2; 
+    public static double centerControlWeight = 1; 
     public static double evaluate(Board board) {
         board.switchTurn();
         int numPossibleNextMovesSameColor = board.generateAllLegalMoves().size();
@@ -37,10 +37,10 @@ public class Evaluation {
                     continue;
                 }
                 if (boardArray[i][j].getPiece().getColor() == GColor.WHITE) {
-                    points+= boardArray[i][j].getPiece().getValue();
+                    points-= boardArray[i][j].getPiece().getValue();
                 }
                 else {
-                    points-= boardArray[i][j].getPiece().getValue();
+                    points+= boardArray[i][j].getPiece().getValue();
                 } 
             }
         }
@@ -65,7 +65,7 @@ public class Evaluation {
                 for (int j = 3; j <= 4; j++) {
                     Move move = new Move(square, boardArray[i][j]);
                     if (square.getPiece().controllingSquare(board, move)) {
-                        numPiecesControlling++;
+                        numPiecesControlling--;
                     }
                 }
             }
@@ -77,7 +77,7 @@ public class Evaluation {
                 for (int j = 3; j <= 4; j++) {
                     Move move = new Move(square, boardArray[i][j]);
                     if (square.getPiece().controllingSquare(board, move)) {
-                        numPiecesControlling--;
+                        numPiecesControlling++;
                     }
                 }
             }

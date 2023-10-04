@@ -193,13 +193,14 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
 
                         frame.repaint();
                         loc[0]=null;
-                        
+                        board.printBoard();
                         AI ai = new AI(board);
                         Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));
                         addToTable();
                         board.move(computerMove);
                         System.out.println(computerMove);
+                        board.printBoard();
                         
                         //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
                     }

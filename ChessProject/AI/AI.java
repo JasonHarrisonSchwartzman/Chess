@@ -12,10 +12,13 @@ public class AI {
     private Board board; //curent board
     private GColor color;
     public AI(Board board) {
-        this.board = board;
-        numMoveNodes = board.generateAllLegalMoves(board.getTurn()).size();
+        this.board = new Board();//makes the move
+        for (Move m: board.getMoves()) {
+            this.board.move(m);
+        }
+        numMoveNodes = this.board.generateAllLegalMoves(board.getTurn()).size();
         moveNodes = new MoveNode[numMoveNodes];
-        color = board.getTurn();
+        color = this.board.getTurn();
     }
 
     public Move calculateMove() {
@@ -63,7 +66,7 @@ public class AI {
             return;
         }
         if (node == null) {//only works for depth of 1
-            ArrayList<Move> moves = board.generateAllLegalMoves(board.getTurn());
+            ArrayList<Move> moves = board.generateAllLegalMoves();
             for (int i = 0; i < numMoveNodes; i++) {
                 moveNodes[i] = new MoveNode(null, board, moves.get(i));
             }
@@ -104,9 +107,9 @@ public class AI {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Board board = new Board();
         AI ai = new AI(board);
         ai.createTree(1, board, null);
-    }
+    }*/
 }

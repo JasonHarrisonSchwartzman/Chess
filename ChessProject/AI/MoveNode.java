@@ -31,7 +31,7 @@ public class MoveNode {
         //System.out.println(this.board.generateAllLegalMoves());
         //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         eval = Evaluation.evaluate(this.board);
-        System.out.println("Move: " + move.toString() + " EVAL: " + eval);
+        //System.out.println("Move: " + move.toString() + " EVAL: " + eval);
     }
 
     public MoveNode(Board board) {
