@@ -198,6 +198,9 @@ public class Pawn extends Piece{
                     // en passant remember to delete the pawn
                     else {
                         Move lastMove = board.getLastMove();
+                        if (lastMove == null) {
+                            return false;
+                        }
                         Square lastMoveStartSquare = lastMove.getStartSquare();
                         Square lastMoveEndSquare = lastMove.getEndSquare();
                         Piece lastMovePiece = lastMove.getPiece();

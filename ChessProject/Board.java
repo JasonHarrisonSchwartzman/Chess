@@ -163,6 +163,16 @@ public class Board {
             }
         }
     }
+
+    /**
+     * Makes a move based on strings
+     * @param start
+     * @param end
+     */
+    public void move(String start, String end) {
+        move(new Move(getSquare(start),getSquare(end)));
+    }
+
     /**
      * You can also convert the two Squares to a move object to move a piece
      * @param startSquare
@@ -384,6 +394,7 @@ public class Board {
      */
     public boolean canMove(Move move) {
         if (move == null) {
+            System.out.println("MOVE NULL");
             return false;
         }
         Square startSquare = move.getStartSquare();
@@ -404,6 +415,7 @@ public class Board {
                 debugger("CANT MOVE: WILL BE IN CHECK AFTER MOVING");
                 takeBack(move);
                 switchTurn();
+                System.out.println("CANNOT MOVE WILL BE IN CHECK");
                 return false;
             } 
             takeBack(move);

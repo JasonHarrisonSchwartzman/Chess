@@ -13,10 +13,19 @@ public class AI {
     private GColor color;
     public AI(Board board) {
         this.board = new Board();//makes the move
+        GColor turn = GColor.WHITE;
         for (Move m: board.getMoves()) {
-            this.board.move(m);
+            System.out.println(m);
+            //if (this.board.canMove(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate())) {
+            this.board.move(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate());
+            //}
+            //else {
+            //    System.out.println("ERROR");
+            //}
+            if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
+            else this.board.makeTurn(GColor.WHITE);
         }
-        numMoveNodes = this.board.generateAllLegalMoves(this.board.getTurn()).size();
+        numMoveNodes = this.board.generateAllLegalMoves(board.getTurn()).size();
         moveNodes = new MoveNode[numMoveNodes];
         color = this.board.getTurn();
     }

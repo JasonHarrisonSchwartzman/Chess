@@ -20,10 +20,18 @@ public class MoveNode {
     public MoveNode(MoveNode prev, Board board, Move move) {
         this.prev = prev;
         this.move = move;
-        //this.board = board;
         this.board = new Board();//makes the move
+        GColor turn = GColor.WHITE;
         for (Move m: board.getMoves()) {
-            this.board.move(m);
+            //System.out.println(m);
+            //if (this.board.canMove(m)) {
+                this.board.move(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate());
+            //}
+            //else {
+            //    System.out.println("MOVENODE ERROR");
+            //}
+            if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
+            else this.board.makeTurn(GColor.WHITE);
         }
         //this.board.switchTurn();
         this.board.move(move);
