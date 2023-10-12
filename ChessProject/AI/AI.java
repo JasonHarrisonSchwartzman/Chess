@@ -16,7 +16,7 @@ public class AI {
         for (Move m: board.getMoves()) {
             this.board.move(m);
         }
-        numMoveNodes = this.board.generateAllLegalMoves(board.getTurn()).size();
+        numMoveNodes = this.board.generateAllLegalMoves(this.board.getTurn()).size();
         moveNodes = new MoveNode[numMoveNodes];
         color = this.board.getTurn();
     }

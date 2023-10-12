@@ -8,7 +8,7 @@ import ChessProject.Pieces.*;
 
 public class Evaluation {
 
-    public static double pointsWeight = 2; 
+    public static double pointsWeight = 3; 
     public static double centerControlWeight = 1; 
     public static double evaluate(Board board) {
         board.switchTurn();
