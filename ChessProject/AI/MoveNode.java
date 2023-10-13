@@ -21,7 +21,6 @@ public class MoveNode {
         this.prev = prev;
         this.move = move;
         this.board = new Board();//makes the move
-        GColor turn = GColor.WHITE;
         for (Move m: board.getMoves()) {
             //System.out.println(m);
             //if (this.board.canMove(m)) {

@@ -13,7 +13,6 @@ public class AI {
     private GColor color;
     public AI(Board board) {
         this.board = new Board();//makes the move
-        GColor turn = GColor.WHITE;
         for (Move m: board.getMoves()) {
             System.out.println(m);
             //if (this.board.canMove(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate())) {
