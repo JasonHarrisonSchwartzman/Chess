@@ -14,15 +14,8 @@ public class AI {
     public AI(Board board) {
         this.board = new Board();//makes the move
         for (Move m: board.getMoves()) {
-            System.out.println(m);
-            //if (this.board.canMove(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate())) {
+            //System.out.println(m);
             this.board.move(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate());
-            //}
-            //else {
-            //    System.out.println("ERROR");
-            //}
-            //if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
-            //else this.board.makeTurn(GColor.WHITE);
         }
         numMoveNodes = this.board.generateAllLegalMoves(board.getTurn()).size();
         moveNodes = new MoveNode[numMoveNodes];
@@ -30,8 +23,8 @@ public class AI {
     }
 
     public Move calculateMove() {
-        System.out.println("Calculating move");
-        createTree(1,board,null);
+        //System.out.println("Calculating move");
+        createTree(2,board,null);
         return findBestMove();
         //return board.generateAllLegalMoves(board.getTurn()).get(0);
     }
@@ -77,15 +70,17 @@ public class AI {
             ArrayList<Move> moves = board.generateAllLegalMoves();
             for (int i = 0; i < numMoveNodes; i++) {
                 moveNodes[i] = new MoveNode(null, board, moves.get(i));
+                if (depth > 1) moveNodes[i].addLegalMoveNodes();
+                createTree(depth - 1, board, moveNodes[i]);
             }
         }
-        /*else {
+        else {
             for (int i = 0; i < node.getLegalMoves().length; i++) {
                 MoveNode currentMove = node.getLegalMoves()[i];
                 if (depth > 1) currentMove.addLegalMoveNodes();
                 createTree(depth - 1, board,currentMove);
             }
-        }*/
+        }
     }
 
     /**

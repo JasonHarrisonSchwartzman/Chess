@@ -250,12 +250,33 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));
                         addToTable();
+<<<<<<< HEAD
                         System.out.println(computerMove);
                         board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
                         board.printBoard();
                     
                     //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
                     
+=======
+                        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
+                        //System.out.println(computerMove);
+                        //board.printBoard();
+                        
+                        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                    }
+                    if (board.isInCheck(board.getTurn())) {
+                        if (board.isInCheckMate(board.getTurn())) {
+                            frame.repaint();
+                            JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    else {
+                        if (board.isInStaleMate(board.getTurn())) {
+                            frame.repaint();
+                            JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+>>>>>>> 4be1159733696b103fa0bcfb0ea4a7a6c7d5683e
                     //this updates the window
                     frame.repaint();
                     loc[0]=null;

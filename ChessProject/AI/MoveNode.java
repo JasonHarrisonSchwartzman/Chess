@@ -21,23 +21,13 @@ public class MoveNode {
         this.move = move;
         this.board = new Board();//makes the move
         for (Move m: board.getMoves()) {
-            //System.out.println(m);
-            //if (this.board.canMove(m)) {
-                this.board.move(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate());
-            //}
-            //else {
-            //    System.out.println("MOVENODE ERROR");
-            //}
-            //if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
-            //else this.board.makeTurn(GColor.WHITE);
+            this.board.move(m.getStartSquare().getCoordinates().getCoordinate(),m.getEndSquare().getCoordinates().getCoordinate());
         }
-        //this.board.switchTurn();
         this.board.move(move.getStartSquare().getCoordinates().getCoordinate(),move.getEndSquare().getCoordinates().getCoordinate());
-        //this.board.printBoard();
-        //System.out.println(this.board.generateAllLegalMoves());
-        //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
         eval = Evaluation.evaluate(this.board);
-        //System.out.println("Move: " + move.toString() + " EVAL: " + eval);
+        
+        totalLegalMoves = this.board.generateAllLegalMoves(this.board.getTurn()).size();
+        addLegalMoveNodes();
     }
 
     public MoveNode(Board board) {
