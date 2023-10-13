@@ -22,8 +22,8 @@ public class AI {
             //else {
             //    System.out.println("ERROR");
             //}
-            if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
-            else this.board.makeTurn(GColor.WHITE);
+            //if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
+            //else this.board.makeTurn(GColor.WHITE);
         }
         numMoveNodes = this.board.generateAllLegalMoves(board.getTurn()).size();
         moveNodes = new MoveNode[numMoveNodes];

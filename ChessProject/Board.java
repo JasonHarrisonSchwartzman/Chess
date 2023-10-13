@@ -217,6 +217,7 @@ public class Board {
         //en passent and pawn promotion
         if (piece.getName().equals("Pawn")) {
             if (endSquare.getCoordinates().getRank() == 1 || endSquare.getCoordinates().getRank() == 8) {
+                System.out.println("PROMOTE PAWN OF COLOR " + turn);
                 promotePawn(move);
             }
         }
@@ -415,7 +416,7 @@ public class Board {
                 debugger("CANT MOVE: WILL BE IN CHECK AFTER MOVING");
                 takeBack(move);
                 switchTurn();
-                System.out.println("CANNOT MOVE WILL BE IN CHECK");
+                //System.out.println("CANNOT MOVE WILL BE IN CHECK");
                 return false;
             } 
             takeBack(move);

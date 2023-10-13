@@ -30,11 +30,11 @@ public class MoveNode {
             //else {
             //    System.out.println("MOVENODE ERROR");
             //}
-            if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
-            else this.board.makeTurn(GColor.WHITE);
+            //if (turn == GColor.WHITE) this.board.makeTurn(GColor.BLACK);
+            //else this.board.makeTurn(GColor.WHITE);
         }
         //this.board.switchTurn();
-        this.board.move(move);
+        this.board.move(move.getStartSquare().getCoordinates().getCoordinate(),move.getEndSquare().getCoordinates().getCoordinate());
         //this.board.printBoard();
         //System.out.println(this.board.generateAllLegalMoves());
         //totalLegalMoves = board.generateAllLegalMoves(board.getTurn()).size();
