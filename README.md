@@ -14,6 +14,7 @@ https://www.oracle.com/java/technologies/downloads/
 
 ### Mac
 
-1. click chess.jar
+1. In terminal go to the directory where you installed
+2. type: java -jar Chess.jar
 
 This chess project was created by Jason Schwartzman, Zakaria Ali. Inspired by the older chess project "CaptureTheKing" created by Jason Schwartzman and Efaz Ahmed.
