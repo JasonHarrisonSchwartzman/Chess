@@ -11,6 +11,6 @@ https://www.oracle.com/java/technologies/downloads/
 ### Running
 
 1. In terminal/command prompt go to the directory where you installed
-2. type: java -jar Chess.jar
+2. type: java -jar chess.jar
 
 This chess project was created by Jason Schwartzman, Zakaria Ali. Inspired by the older chess project "CaptureTheKing" created by Jason Schwartzman and Efaz Ahmed.
