@@ -225,7 +225,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
         });
         //this make the moves history
         Color c = new Color(102,255,102);
-        String [] turn = {" ","White", "Black"};
+        String [] turn = {"#","White", "Black"};
         //makes the data table
         movesHistory = new DefaultTableModel(turn,0);
         //puts it on the window
