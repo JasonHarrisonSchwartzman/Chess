@@ -8,13 +8,9 @@ https://www.java.com/en/download/help/download_options.html
 https://www.oracle.com/java/technologies/downloads/
 3. Set system environment variable 'Path' to the JDK Folder (C:/ProgramFiles/Java/jdk-11.0.10)
 
-### Windows 
+### Running
 
-1. click chess.exe
-
-### Mac
-
-1. In terminal go to the directory where you installed
+1. In terminal/command prompt go to the directory where you installed
 2. type: java -jar Chess.jar
 
 This chess project was created by Jason Schwartzman, Zakaria Ali. Inspired by the older chess project "CaptureTheKing" created by Jason Schwartzman and Efaz Ahmed.
