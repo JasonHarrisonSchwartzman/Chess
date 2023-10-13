@@ -31,6 +31,7 @@ public class ChessGameGUI extends Canvas{
     
 static boolean dbugmode = false;
 static boolean test = true;
+static boolean first = false;
 static int turn = 1;
 static Board board = new Board();
 static DefaultTableModel movesHistory;
@@ -38,8 +39,26 @@ static ArrayList<String> HMoves = new ArrayList<String>();
 static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
 
     public static void main(String[] args) throws IOException{
+        Choice();
         GameWindow();
  
+    }
+    public static void Choice() throws IOException{
+        String[] options = new String[] {"White", "Black"};
+        int response = JOptionPane.showOptionDialog(null, "Pick which side you like", "Choice",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, options, options[0]);
+        switch(response){
+            case(0):{
+                first = false;
+                break;
+            }
+            case(1):{
+                first = true;
+                break;
+            }
+        }
+        System.out.println(first);
     }
 
     public static void GameWindow() throws IOException{
@@ -142,6 +161,37 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
         pn.setPreferredSize(new Dimension(576,576));
         frame.setLayout(new BorderLayout());
         frame.add(pn,BorderLayout.CENTER);
+    
+        //this make the moves history (must be created first to avoid null error when AI goes first)
+        Color c = new Color(102,255,102);
+        String [] turn = {"#","White", "Black"};
+        //makes the data table
+        movesHistory = new DefaultTableModel(turn,0);
+        //puts it on the window
+        JTable print = new JTable(movesHistory);
+        print.getColumnModel().getColumn(0).setPreferredWidth(3); 
+        print.setBackground(c);
+        print.setEnabled(false);
+        JScrollPane scroll = new JScrollPane(print);
+        scroll.setPreferredSize(new Dimension(200,150));
+    //this add the moves history to the window
+    frame.add(scroll,BorderLayout.EAST);
+    frame.setDefaultCloseOperation(3);
+    frame.setLocation(600, 200);
+    frame.pack();
+    frame.setVisible(true);
+
+    if(first){
+        AI ai = new AI(board);
+        Move computerMove = ai.calculateMove();
+        HMoves.add(Conversions.moveToAlgebraic(computerMove));
+        addToTable();
+        System.out.println(computerMove);
+        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
+        board.printBoard();
+                    
+        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+    } 
 
         //mouse movement on the board.
         //mouse movement.
@@ -164,9 +214,8 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                 System.out.print((e.getY()-32)/64+" "+SCX((e.getY()-32)/64)+" ");
                 System.out.println(boardArray[SCX((e.getY()-32)/64)][e.getX()/64].getCoordinates().getCoordinate()+" "+boardArray[SCX((e.getY()-32)/64)][e.getX()/64].getPiece().getColor()+" "+boardArray[SCX((e.getY()-31)/64)][e.getX()/64].getPiece().getName());
                 }
-
-
             }
+
             @Override
             //this method goes first
             public void mousePressed(MouseEvent e) {
@@ -194,28 +243,19 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         frame.repaint();
                         loc[0]=null;
                         board.printBoard();
+                    }
+                        Check(frame);
+
                         AI ai = new AI(board);
                         Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));
                         addToTable();
-                        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
                         System.out.println(computerMove);
+                        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
                         board.printBoard();
-                        
-                        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
-                    }
-                    if (board.isInCheck(board.getTurn())) {
-                        if (board.isInCheckMate(board.getTurn())) {
-                            frame.repaint();
-                            JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }
-                    else {
-                        if (board.isInStaleMate(board.getTurn())) {
-                            frame.repaint();
-                            JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }
+                    
+                    //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                    
                     //this updates the window
                     frame.repaint();
                     loc[0]=null;
@@ -228,27 +268,22 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
             public void mouseExited(MouseEvent e) {
             } 
         });
-        //this make the moves history
-        Color c = new Color(102,255,102);
-        String [] turn = {"#","White", "Black"};
-        //makes the data table
-        movesHistory = new DefaultTableModel(turn,0);
-        //puts it on the window
-        JTable print = new JTable(movesHistory);
-        print.getColumnModel().getColumn(0).setPreferredWidth(3); 
-        print.setBackground(c);
-        print.setEnabled(false);
-        JScrollPane scroll = new JScrollPane(print);
-        scroll.setPreferredSize(new Dimension(200,150));
-        //
-    //this add the moves history to the window
-    frame.add(scroll,BorderLayout.EAST);
-    frame.setDefaultCloseOperation(3);
-    frame.setLocation(600, 200);
-    frame.pack();
-    frame.setVisible(true);
     }
 
+    public static void Check(JFrame frame){
+        if (board.isInCheck(board.getTurn())) {
+             if (board.isInCheckMate(board.getTurn())) {
+                    frame.repaint();
+                    JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
+                }
+        }
+        else {
+            if (board.isInStaleMate(board.getTurn())) {
+                frame.repaint();
+                JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+    }
 
 
 
