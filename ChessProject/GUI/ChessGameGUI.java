@@ -198,7 +198,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         Move computerMove = ai.calculateMove();
                         HMoves.add(Conversions.moveToAlgebraic(computerMove));
                         addToTable();
-                        board.move(computerMove);
+                        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
                         System.out.println(computerMove);
                         board.printBoard();
                         
