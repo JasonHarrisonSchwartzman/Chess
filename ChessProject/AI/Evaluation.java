@@ -8,11 +8,18 @@ import ChessProject.Pieces.*;
 
 public class Evaluation {
 
-    public static double pointsWeight = 0.7; //70%
-    public static double centerControlWeight = 0.3; //30%
-    
+    public static double pointsWeight = 3; 
+    public static double centerControlWeight = 1; 
     public static double evaluate(Board board) {
-        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board);
+        board.switchTurn();
+        int numPossibleNextMovesSameColor = board.generateAllLegalMoves().size();
+        board.switchTurn();
+        //System.out.println("Evaluating turn: " + board.getTurn().toString());
+        //System.out.println(board.generateAllLegalMoves(board.getTurn()));
+        //board.printBoard();
+        //return board.generateAllLegalMoves().size();
+        //System.out.println("EVAL: " + (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size()));
+        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + numPossibleNextMovesSameColor;
     }
 
     /**
@@ -30,10 +37,10 @@ public class Evaluation {
                     continue;
                 }
                 if (boardArray[i][j].getPiece().getColor() == GColor.WHITE) {
-                    points+= boardArray[i][j].getPiece().getValue();
+                    points-= boardArray[i][j].getPiece().getValue();
                 }
                 else {
-                    points-= boardArray[i][j].getPiece().getValue();
+                    points+= boardArray[i][j].getPiece().getValue();
                 } 
             }
         }
@@ -58,7 +65,7 @@ public class Evaluation {
                 for (int j = 3; j <= 4; j++) {
                     Move move = new Move(square, boardArray[i][j]);
                     if (square.getPiece().controllingSquare(board, move)) {
-                        numPiecesControlling++;
+                        numPiecesControlling--;
                     }
                 }
             }
@@ -70,7 +77,7 @@ public class Evaluation {
                 for (int j = 3; j <= 4; j++) {
                     Move move = new Move(square, boardArray[i][j]);
                     if (square.getPiece().controllingSquare(board, move)) {
-                        numPiecesControlling--;
+                        numPiecesControlling++;
                     }
                 }
             }

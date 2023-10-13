@@ -99,11 +99,12 @@ public class Board {
      * @param b
      */
     public Board(Board b) {
-        /*this.board = b.board;
+        /*
         this.capturedPiece = b.capturedPiece;
         this.moves = b.moves;
         this.turn = b.turn;*/
-        System.out.println("board start created");
+        //System.out.println("board start created");
+        this.turn = b.turn;
         board = new Square[8][8];
         Square[][] boardArray = b.getBoard();
         for (int i = 0; i < 8; i++) {
@@ -111,13 +112,13 @@ public class Board {
                 board[i][j] = new Square(boardArray[i][j]);
             }
         }
-        System.out.println("made board");
+        //System.out.println("made board");
         ArrayList<Move> bMoves = b.getMoves();
         moves = new ArrayList<Move>(bMoves.size());
         for (int i = 0; i < bMoves.size(); i++) {
             moves.add(i, bMoves.get(i));
         }
-        System.out.println("test");
+        //System.out.println("test");
     }
 
     /**
@@ -128,7 +129,6 @@ public class Board {
     public Board(Board b, Move move) {
         this(b);
         this.move(move);
-        System.out.println("board end created");
     }
     /**
      * This method sets up all the adjacent square references in each square object
@@ -163,6 +163,16 @@ public class Board {
             }
         }
     }
+
+    /**
+     * Makes a move based on strings
+     * @param start
+     * @param end
+     */
+    public void move(String start, String end) {
+        move(new Move(getSquare(start),getSquare(end)));
+    }
+
     /**
      * You can also convert the two Squares to a move object to move a piece
      * @param startSquare
@@ -190,7 +200,7 @@ public class Board {
             //pieceLocation.get(getNextTurn()).remove(board[Integer.parseInt(endSquareIndices.substring(0,1))][Integer.parseInt(endSquareIndices.substring(1))]);
             capturedPiece = new Square(endSquare); // should add the captured piece to the arrayList
         }
-        // capturedPiece is empty otherwisep
+        // capturedPiece is empty otherwise
         else {
             capturedPiece = null;
         }
@@ -207,6 +217,7 @@ public class Board {
         //en passent and pawn promotion
         if (piece.getName().equals("Pawn")) {
             if (endSquare.getCoordinates().getRank() == 1 || endSquare.getCoordinates().getRank() == 8) {
+                System.out.println("PROMOTE PAWN OF COLOR " + turn);
                 promotePawn(move);
             }
         }
@@ -303,7 +314,7 @@ public class Board {
      */
     public void promotePawn(Move move) {
         Square endSquare = move.getEndSquare();
-        if (turn == GColor.WHITE) {
+        if (turn == GColor.WHITE) {//TODO: was GColor.WHITE
             endSquare.setPiece(new Queen(GColor.WHITE));
         }
         else {
@@ -384,6 +395,7 @@ public class Board {
      */
     public boolean canMove(Move move) {
         if (move == null) {
+            System.out.println("MOVE NULL");
             return false;
         }
         Square startSquare = move.getStartSquare();
@@ -404,6 +416,7 @@ public class Board {
                 debugger("CANT MOVE: WILL BE IN CHECK AFTER MOVING");
                 takeBack(move);
                 switchTurn();
+                //System.out.println("CANNOT MOVE WILL BE IN CHECK");
                 return false;
             } 
             takeBack(move);
@@ -519,6 +532,23 @@ public class Board {
      * @return ArrayList of Moves
      */
     public ArrayList<Move> generateAllLegalMoves(GColor color) {
+        ArrayList<Move> legalMoves = new ArrayList<Move>();
+        ArrayList<Square> pieces = findAllPiecesOfColor(color);
+        for (Square square: pieces) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    Move move = new Move(square, board[i][j]);
+                    if (canMove(move)) {
+                        legalMoves.add(move);
+                    }
+                }
+            }
+        }
+        return legalMoves;
+    }
+
+    public ArrayList<Move> generateAllLegalMoves() {
+        GColor color = turn;
         ArrayList<Move> legalMoves = new ArrayList<Move>();
         ArrayList<Square> pieces = findAllPiecesOfColor(color);
         for (Square square: pieces) {
@@ -659,6 +689,7 @@ public class Board {
                 return square;
             }
         }
+        System.out.println("King Location is NULL");
         return null;
     }
 

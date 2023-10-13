@@ -118,7 +118,6 @@ public class Bishop extends Piece{
         Square startSquare = move.getStartSquare();
         Square endSquare = move.getEndSquare();
         Square currentSquare = startSquare;
-
         char endFile = endSquare.getCoordinates().getFile();
         int endRank = endSquare.getCoordinates().getRank();
         char startFile = startSquare.getCoordinates().getFile();
@@ -160,8 +159,9 @@ public class Bishop extends Piece{
                 currentSquare = currentSquare.getDownRight();
             }
             else {
-                //System.out.println("ERROR LMAO");
+                System.out.println("Bishop error");
             }
+            if (currentSquare == null) return false;
             if (currentSquare.getPiece().getName().equals("Empty")) {
                 if (endSquare.equals(currentSquare)) {
                     return true;

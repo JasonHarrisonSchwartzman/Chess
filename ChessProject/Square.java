@@ -31,6 +31,7 @@ public class Square {
         coordinates = c;
         piece = p;
     }
+
     /**
      * Create a Square with a file and rank and a piece
      * @param file
@@ -56,7 +57,9 @@ public class Square {
      * @param s
      */
     public Square(Square s) {
+        //if (s == null) return;
         coordinates = s.getCoordinates();
+        //piece = new Piece(s.getPiece());
         piece = s.getPiece();
         up = s.getUp();
         down = s.getDown();
