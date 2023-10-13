@@ -2,7 +2,6 @@ package ChessProject.AI;
 
 import ChessProject.*;
 import java.util.ArrayList;
-import ChessProject.Pieces.GColor;
 
 public class MoveNode {
     private MoveNode prev; //previous move
