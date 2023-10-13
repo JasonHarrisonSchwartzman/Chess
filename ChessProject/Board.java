@@ -313,7 +313,7 @@ public class Board {
      */
     public void promotePawn(Move move) {
         Square endSquare = move.getEndSquare();
-        if (turn == GColor.WHITE) {
+        if (turn == GColor.WHITE) {//TODO: was GColor.WHITE
             endSquare.setPiece(new Queen(GColor.WHITE));
         }
         else {

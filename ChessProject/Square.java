@@ -31,6 +31,7 @@ public class Square {
         coordinates = c;
         piece = p;
     }
+
     /**
      * Create a Square with a file and rank and a piece
      * @param file
