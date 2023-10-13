@@ -217,7 +217,7 @@ public class Board {
         //en passent and pawn promotion
         if (piece.getName().equals("Pawn")) {
             if (endSquare.getCoordinates().getRank() == 1 || endSquare.getCoordinates().getRank() == 8) {
-                System.out.println("PROMOTE PAWN OF COLOR " + turn);
+                //System.out.println("PROMOTE PAWN OF COLOR " + turn);
                 promotePawn(move);
             }
         }
