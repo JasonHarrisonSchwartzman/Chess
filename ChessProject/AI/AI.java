@@ -24,7 +24,7 @@ public class AI {
 
     public Move calculateMove() {
         //System.out.println("Calculating move");
-        createTree(2,board,null);
+        createTree(1,board,null);
         return findBestMove();
         //return board.generateAllLegalMoves(board.getTurn()).get(0);
     }
@@ -70,8 +70,8 @@ public class AI {
             ArrayList<Move> moves = board.generateAllLegalMoves();
             for (int i = 0; i < numMoveNodes; i++) {
                 moveNodes[i] = new MoveNode(null, board, moves.get(i));
-                if (depth > 1) moveNodes[i].addLegalMoveNodes();
-                createTree(depth - 1, board, moveNodes[i]);
+                //if (depth > 1) moveNodes[i].addLegalMoveNodes();
+                //createTree(depth - 1, board, moveNodes[i]);
             }
         }
         else {

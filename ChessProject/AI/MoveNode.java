@@ -26,8 +26,8 @@ public class MoveNode {
         this.board.move(move.getStartSquare().getCoordinates().getCoordinate(),move.getEndSquare().getCoordinates().getCoordinate());
         eval = Evaluation.evaluate(this.board);
         
-        totalLegalMoves = this.board.generateAllLegalMoves(this.board.getTurn()).size();
-        addLegalMoveNodes();
+        //totalLegalMoves = this.board.generateAllLegalMoves(this.board.getTurn()).size();
+        //addLegalMoveNodes();
     }
 
     public MoveNode(Board board) {
