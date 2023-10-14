@@ -243,7 +243,8 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         frame.repaint();
                         loc[0]=null;
                         board.printBoard();
-                    }
+                        
+
                         Check(frame);
 
                         AI ai = new AI(board);
@@ -253,8 +254,9 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         System.out.println(computerMove);
                         board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
                         board.printBoard();
-                    
-                    //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                    }
+                        Check(frame);
                     
                     //this updates the window
                     frame.repaint();
