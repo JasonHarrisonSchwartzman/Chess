@@ -19,7 +19,9 @@ public class Evaluation {
         //board.printBoard();
         //return board.generateAllLegalMoves().size();
         //System.out.println("EVAL: " + (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size()));
-        return pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + numPossibleNextMovesSameColor;
+        int factor = 1;
+        if (board.getTurn() == GColor.BLACK) factor = -1;
+        return (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + numPossibleNextMovesSameColor) * factor;
     }
 
     /**
@@ -36,7 +38,7 @@ public class Evaluation {
                 if (boardArray[i][j].getPiece().getName().equals("Empty")) {
                     continue;
                 }
-                if (boardArray[i][j].getPiece().getColor() == GColor.WHITE) {
+                if (boardArray[i][j].getPiece().getColor() == board.getTurn()) {
                     points-= boardArray[i][j].getPiece().getValue();
                 }
                 else {
