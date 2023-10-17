@@ -32,6 +32,8 @@ public class ChessGameGUI extends Canvas{
 static boolean dbugmode = false;
 static boolean test = true;
 static boolean first = false;
+static boolean playerWent = false;
+static boolean GameAlive = false;
 static int turn = 1;
 static Board board = new Board();
 static DefaultTableModel movesHistory;
@@ -41,11 +43,33 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
     public static void main(String[] args) throws IOException{
         Choice();
         GameWindow();
- 
     }
+    public static void Remach(){
+        String[] options = new String[] {"Yes", "No"};
+        int response = JOptionPane.showOptionDialog(null, "Remach?", "Choice",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, options, options[0]);
+        switch(response){
+            case(0):{
+                try {
+                    turn = 1;
+                    board = new Board();
+                    first = false;
+                    main(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case(1):{
+                break;
+            }
+        }
+    }
+
     public static void Choice() throws IOException{
         String[] options = new String[] {"White", "Black"};
-        int response = JOptionPane.showOptionDialog(null, "Pick which side you like", "Choice",
+        int response = JOptionPane.showOptionDialog(null, "Choose color", "Choice",
             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
             null, options, options[0]);
         switch(response){
@@ -58,11 +82,10 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                 break;
             }
         }
-        System.out.println(first);
     }
 
     public static void GameWindow() throws IOException{
-
+        GameAlive = true;
         Square[][] boardArray = board.getBoard();
         String[] loc = new String[2];
 
@@ -164,9 +187,9 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
     
         //this make the moves history (must be created first to avoid null error when AI goes first)
         Color c = new Color(102,255,102);
-        String [] turn = {"#","White", "Black"};
+        String [] Hturn = {"#","White", "Black"};
         //makes the data table
-        movesHistory = new DefaultTableModel(turn,0);
+        movesHistory = new DefaultTableModel(Hturn,0);
         //puts it on the window
         JTable print = new JTable(movesHistory);
         print.getColumnModel().getColumn(0).setPreferredWidth(3); 
@@ -182,13 +205,14 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
     frame.setVisible(true);
 
     if(first){
+        System.out.println("i Jason");
         AI ai = new AI(board);
         Move computerMove = ai.calculateMove();
         HMoves.add(Conversions.moveToAlgebraic(computerMove));
         addToTable();
         System.out.println(computerMove);
         board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
-        board.printBoard();
+        //board.printBoard();
                     
         //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
     } 
@@ -210,6 +234,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
             //this method goes third
             public void mouseClicked(MouseEvent e) {
                 //to see what the board sees
+                if(!GameAlive) return;
                 if(dbugmode){
                 System.out.print((e.getY()-32)/64+" "+SCX((e.getY()-32)/64)+" ");
                 System.out.println(boardArray[SCX((e.getY()-32)/64)][e.getX()/64].getCoordinates().getCoordinate()+" "+boardArray[SCX((e.getY()-32)/64)][e.getX()/64].getPiece().getColor()+" "+boardArray[SCX((e.getY()-31)/64)][e.getX()/64].getPiece().getName());
@@ -219,6 +244,7 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
             @Override
             //this method goes first
             public void mousePressed(MouseEvent e) {
+            if(!GameAlive) return;
                 //this grabs the squares data.
             if(loc[0]==null || boardArray[SCX((e.getY()-32)/64)][e.getX()/64].getPiece().getColor() == board.getTurn()){
                 loc[0]=getPieceLoc(e.getX(),e.getY()-32,boardArray);
@@ -230,11 +256,13 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
             @Override
             //this method goes second
             public void mouseReleased(MouseEvent e) {
+            if(!GameAlive) return;
                 //this grabs the second squares data and sends it to board if it can move.
                 if(loc[0] != getPieceLoc(e.getX(), e.getY()-32, boardArray)){    
                     loc[1]=getPieceLoc(e.getX(),e.getY()-32,boardArray);
                     Move move = new Move(board.getSquare(loc[0]),board.getSquare(loc[1]));
-                    if (board.canMove(move)) {
+                    if (board.canMove(move) ) {
+                        System.out.println("player can move" + board.canMove(move) + turn);
                         HMoves.add(Conversions.moveToAlgebraic(move));
                         addToTable();
                         predictedMove=new ArrayList<Integer>();
@@ -244,23 +272,25 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
                         loc[0]=null;
                         board.printBoard();
                         
-
-                        Check(frame);
-
-                        AI ai = new AI(board);
-                        Move computerMove = ai.calculateMove();
-                        HMoves.add(Conversions.moveToAlgebraic(computerMove));
-                        addToTable();
-                        System.out.println(computerMove);
-                        board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
-                        board.printBoard();
-                        //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                        boolean Gameover = Check(frame);
+                        if(!Gameover){
+                            System.out.println("i zakaria");
+                            AI ai = new AI(board);
+                            Move computerMove = ai.calculateMove();
+                            HMoves.add(Conversions.moveToAlgebraic(computerMove));
+                            addToTable();
+                            System.out.println(computerMove);
+                            board.move(computerMove.getStartSquare().getCoordinates().getCoordinate(),computerMove.getEndSquare().getCoordinates().getCoordinate());
+                            //board.printBoard();
+                            //System.out.println("CenterControl: "+Evaluation.evaluateCenterControl(board)+" Piece point: "+Evaluation.evaluatePoints(board));
+                        }
+                        else Remach();
                     }
-                        Check(frame);
-                    
                     //this updates the window
                     frame.repaint();
                     loc[0]=null;
+                    boolean Gameover = Check(frame);
+                    if(Gameover) Remach();
                 }
             }
             @Override
@@ -272,19 +302,26 @@ static ArrayList<Integer> predictedMove = new ArrayList<Integer>();
         });
     }
 
-    public static void Check(JFrame frame){
+    public static boolean Check(JFrame frame) {
         if (board.isInCheck(board.getTurn())) {
              if (board.isInCheckMate(board.getTurn())) {
                     frame.repaint();
                     JOptionPane.showMessageDialog(null, board.getNextTurn()+" wins!", "Winner", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                    GameAlive=false;
+                    return true;
                 }
         }
         else {
             if (board.isInStaleMate(board.getTurn())) {
-                frame.repaint();
-                JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
+                    frame.repaint();
+                    JOptionPane.showMessageDialog(null, "Stalemate", " ", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                    GameAlive=false;
+                    return true;
                 }
-            }
+        }
+        return false;
     }
 
 
