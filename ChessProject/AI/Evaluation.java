@@ -14,7 +14,6 @@ public class Evaluation {
         board.switchTurn();
         int numPossibleNextMovesSameColor = board.generateAllLegalMoves().size();
         board.switchTurn();
-        //System.out.println("Evaluating turn: " + board.getTurn().toString());
         //System.out.println(board.generateAllLegalMoves(board.getTurn()));
         //board.printBoard();
         //return board.generateAllLegalMoves().size();
