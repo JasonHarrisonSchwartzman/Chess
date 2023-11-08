@@ -15,7 +15,6 @@ public class Evaluation {
         int numPossibleNextMovesSameColor = board.generateAllLegalMoves().size();
         board.switchTurn();
         //System.out.println(board.generateAllLegalMoves(board.getTurn()));
-        //board.printBoard();
         //return board.generateAllLegalMoves().size();
         //System.out.println("EVAL: " + (pointsWeight * evaluatePoints(board) + centerControlWeight * evaluateCenterControl(board) + board.generateAllLegalMoves(board.getTurn()).size()));
         int factor = 1;
