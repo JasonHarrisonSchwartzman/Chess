@@ -1,5 +1,7 @@
 # Chess Project
 
+This project contains a Chess AI that will play against you in a GUI.
+
 After Downloading and extracting files from the zip:
 
 1. Install Java
